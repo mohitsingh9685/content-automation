@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment & Secrets (NEVER commit real API keys)
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# Generated Media & Temporary Files
+storage/audio/*
+!storage/audio/.gitkeep
+storage/scenes/*
+!storage/scenes/.gitkeep
+storage/subtitles/*
+!storage/subtitles/.gitkeep
+storage/visuals/*
+!storage/visuals/.gitkeep
+storage/videos/*
+!storage/videos/.gitkeep
+tmp/
+*.mp4
+*.mp3
+*.wav
+*.srt
+*.ass
+
+# Docker Volumes & Local DB Data
+postgres_data/
+n8n_data/
+
+# Build Outputs & Logs
+dist/
+frontend/dist/
+logs/
+*.log
+npm-debug.log*
+
+# OS & Editor
+.DS_Store
+.idea/
+.vscode/

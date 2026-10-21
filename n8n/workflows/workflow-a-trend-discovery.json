@@ -1,0 +1,74 @@
+{
+  "name": "Workflow A — Multi-Category Hindi News Discovery & Ranking",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger-a",
+      "name": "Every 2 Hours Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:4000/api/trends/discover",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "http-discover-trends",
+      "name": "Discover & Rank Live RSS News",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/api/trends/recommended",
+        "options": {}
+      },
+      "id": "http-get-recommended",
+      "name": "Fetch Top Recommended Story",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [760, 300]
+    }
+  ],
+  "connections": {
+    "Every 2 Hours Schedule": {
+      "main": [
+        [
+          {
+            "node": "Discover & Rank Live RSS News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discover & Rank Live RSS News": {
+      "main": [
+        [
+          {
+            "node": "Fetch Top Recommended Story",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

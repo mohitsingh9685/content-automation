@@ -1,0 +1,22 @@
+{
+  "name": "hindi-trend-ai-backend",
+  "version": "1.0.0",
+  "description": "Backend API, Background Worker, and Gemini Hindi Content Engine for Hindi Trend AI",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:migrate": "node src/db/migrate.js",
+    "db:seed": "node src/db/seed.js",
+    "db:setup": "node src/db/migrate.js && node src/db/seed.js",
+    "test": "NODE_ENV=test node tests/phase1.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "pg": "^8.13.3",
+    "zod": "^3.24.2"
+  }
+}

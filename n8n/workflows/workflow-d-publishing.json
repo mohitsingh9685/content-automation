@@ -1,0 +1,53 @@
+{
+  "name": "Workflow D — Approved Video Publishing (YouTube Shorts & Instagram Reels)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "publish-approved-video",
+        "responseMode": "onReceived"
+      },
+      "id": "webhook-trigger-d",
+      "name": "Webhook: Human Approved Video",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://host.docker.internal:4000/api/videos/{{$json.body.videoId}}/publish",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "platforms",
+              "value": "={{$json.body.platforms || ['youtube_shorts', 'instagram_reels']}}"
+            }
+          ]
+        }
+      },
+      "id": "http-publish-video",
+      "name": "Publish via Official YouTube & Instagram APIs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [520, 300]
+    }
+  ],
+  "connections": {
+    "Webhook: Human Approved Video": {
+      "main": [
+        [
+          {
+            "node": "Publish via Official YouTube & Instagram APIs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

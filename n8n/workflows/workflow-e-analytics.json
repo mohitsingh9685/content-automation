@@ -1,0 +1,49 @@
+{
+  "name": "Workflow E — Analytics Retrieval & Topic Recommendations",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger-e",
+      "name": "Every 6 Hours Analytics Sync",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/api/analytics",
+        "options": {}
+      },
+      "id": "http-fetch-analytics",
+      "name": "Retrieve Retention & Category Performance",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [520, 300]
+    }
+  ],
+  "connections": {
+    "Every 6 Hours Analytics Sync": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Retention & Category Performance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

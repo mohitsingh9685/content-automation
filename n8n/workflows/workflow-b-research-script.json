@@ -1,0 +1,61 @@
+{
+  "name": "Workflow B — Research, Fact Verification & Hindi Explainer Script + Storyboard",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-hindi-explainer",
+        "responseMode": "onReceived"
+      },
+      "id": "webhook-trigger-b",
+      "name": "Webhook: Topic Selected",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://host.docker.internal:4000/api/trends/{{$json.body.topicId || 1}}/generate",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "requestedModel",
+              "value": "={{$json.body.requestedModel || 'gemini-3-flash-preview'}}"
+            },
+            {
+              "name": "videoFormat",
+              "value": "={{$json.body.videoFormat || '9:16'}}"
+            },
+            {
+              "name": "autoRender",
+              "value": "={{true}}"
+            }
+          ]
+        }
+      },
+      "id": "http-generate-script",
+      "name": "Gemini Vertex AI Script & Storyboard Generator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [520, 300]
+    }
+  ],
+  "connections": {
+    "Webhook: Topic Selected": {
+      "main": [
+        [
+          {
+            "node": "Gemini Vertex AI Script & Storyboard Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
